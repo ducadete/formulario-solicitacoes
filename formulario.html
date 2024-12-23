@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        .login-container, .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none;
+        }
+        .login-container.active, .form-container.active {
+            display: block;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login -->
+    <div class="login-container active" id="loginContainer">
+        <h1>Autenticação</h1>
+        <p>Insira a senha para acessar o formulário:</p>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" placeholder="Digite a senha">
+        <button id="entrar">Entrar</button>
+        <p id="erro" style="color: red; display: none;">Senha incorreta! Tente novamente.</p>
+    </div>
+
+    <!-- Formulário -->
+    <div class="form-container" id="formContainer">
+        <h1>Formulário de Solicitação</h1>
+        <form id="solicitacaoForm">
+            <label for="data">Data:</label>
+            <input type="text" id="data" name="data" readonly>
+
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="assunto">Assunto:</label>
+            <input type="text" id="assunto" name="assunto" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+            <label for="patrimonio">Patrimônio:</label>
+            <input type="text" id="patrimonio" name="patrimonio">
+
+            <button type="submit">Enviar Dados</button>
+        </form>
+    </div>
+
+    <script>
+        // Senha universal
+        const senhaUniversal = "usfviladutra";
+
+        // Elementos
+        const loginContainer = document.getElementById("loginContainer");
+        const formContainer = document.getElementById("formContainer");
+        const botaoEntrar = document.getElementById("entrar");
+        const campoSenha = document.getElementById("senha");
+        const mensagemErro = document.getElementById("erro");
+
+        // Autenticação
+        botaoEntrar.addEventListener("click", () => {
+            const senhaInserida = campoSenha.value;
+
+            if (senhaInserida === senhaUniversal) {
+                loginContainer.classList.remove("active");
+                formContainer.classList.add("active");
+            } else {
+                mensagemErro.style.display = "block";
+            }
+        });
+
+        // Preenche o campo de data com a data atual
+        document.addEventListener("DOMContentLoaded", () => {
+            const campoData = document.getElementById("data");
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, "0");
+            const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+            const ano = hoje.getFullYear();
+            campoData.value = `${dia}/${mes}/${ano}`;
+        });
+
+        // Mensagem ao enviar os dados (exemplo básico)
+        document.getElementById("solicitacaoForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            alert("Os dados foram enviados (simulação).");
+        });
+    </script>
+</body>
+</html>
